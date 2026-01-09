@@ -220,13 +220,12 @@ def inference_single_image(ref_image, ref_mask, tar_image, tar_mask, guidance_sc
 
 
 if __name__ == '__main__': 
-    '''
+
     # ==== Example for inferring a single image ===
     reference_image_path = './examples/TestDreamBooth/FG/01.png'
     bg_image_path = './examples/TestDreamBooth/BG/000000309203_GT.png'
     bg_mask_path = './examples/TestDreamBooth/BG/000000309203_mask.png'
     save_path = './examples/TestDreamBooth/GEN/gen_res.png'
-
     # reference image + reference mask
     # You could use the demo of SAM to extract RGB-A image with masks
     # https://segment-anything.com/demo
@@ -249,45 +248,43 @@ if __name__ == '__main__':
     h,w = back_image.shape[0], back_image.shape[0]
     ref_image = cv2.resize(ref_image, (w,h))
     vis_image = cv2.hconcat([ref_image, back_image, gen_image])
-    
     cv2.imwrite(save_path, vis_image [:,:,::-1])
-    '''
     #'''
     # ==== Example for inferring VITON-HD Test dataset ===
 
-    from omegaconf import OmegaConf
-    import os 
-    DConf = OmegaConf.load('./configs/datasets.yaml')
-    save_dir = './VITONGEN'
-    if not os.path.exists(save_dir):
-        os.mkdir(save_dir)
+    # from omegaconf import OmegaConf
+    # import os 
+    # DConf = OmegaConf.load('./configs/datasets.yaml')
+    # save_dir = './VITONGEN'
+    # if not os.path.exists(save_dir):
+    #     os.mkdir(save_dir)
 
-    test_dir = DConf.Test.VitonHDTest.image_dir
-    image_names = os.listdir(test_dir)
+    # test_dir = DConf.Test.VitonHDTest.image_dir
+    # image_names = os.listdir(test_dir)
     
-    for image_name in image_names:
-        ref_image_path = os.path.join(test_dir, image_name)
-        tar_image_path = ref_image_path.replace('/cloth/', '/image/')
-        ref_mask_path = ref_image_path.replace('/cloth/','/cloth-mask/')
-        tar_mask_path = ref_image_path.replace('/cloth/', '/image-parse-v3/').replace('.jpg','.png')
+    # for image_name in image_names:
+    #     ref_image_path = os.path.join(test_dir, image_name)
+    #     tar_image_path = ref_image_path.replace('/cloth/', '/image/')
+    #     ref_mask_path = ref_image_path.replace('/cloth/','/cloth-mask/')
+    #     tar_mask_path = ref_image_path.replace('/cloth/', '/image-parse-v3/').replace('.jpg','.png')
 
-        ref_image = cv2.imread(ref_image_path)
-        ref_image = cv2.cvtColor(ref_image, cv2.COLOR_BGR2RGB)
+    #     ref_image = cv2.imread(ref_image_path)
+    #     ref_image = cv2.cvtColor(ref_image, cv2.COLOR_BGR2RGB)
 
-        gt_image = cv2.imread(tar_image_path)
-        gt_image = cv2.cvtColor(gt_image, cv2.COLOR_BGR2RGB)
+    #     gt_image = cv2.imread(tar_image_path)
+    #     gt_image = cv2.cvtColor(gt_image, cv2.COLOR_BGR2RGB)
 
-        ref_mask = (cv2.imread(ref_mask_path) > 128).astype(np.uint8)[:,:,0]
+    #     ref_mask = (cv2.imread(ref_mask_path) > 128).astype(np.uint8)[:,:,0]
 
-        tar_mask = Image.open(tar_mask_path ).convert('P')
-        tar_mask= np.array(tar_mask)
-        tar_mask = tar_mask == 5
+    #     tar_mask = Image.open(tar_mask_path ).convert('P')
+    #     tar_mask= np.array(tar_mask)
+    #     tar_mask = tar_mask == 5
 
-        gen_image = inference_single_image(ref_image, ref_mask, gt_image.copy(), tar_mask)
-        gen_path = os.path.join(save_dir, image_name)
+    #     gen_image = inference_single_image(ref_image, ref_mask, gt_image.copy(), tar_mask)
+    #     gen_path = os.path.join(save_dir, image_name)
 
-        vis_image = cv2.hconcat([ref_image, gt_image, gen_image])
-        cv2.imwrite(gen_path, vis_image[:,:,::-1])
+    #     vis_image = cv2.hconcat([ref_image, gt_image, gen_image])
+    #     cv2.imwrite(gen_path, vis_image[:,:,::-1])
     #'''
 
     
