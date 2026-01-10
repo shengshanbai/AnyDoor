@@ -1,6 +1,3 @@
-import os
-#设置环境变量
-os.environ["XFORMERS_ENABLED"] = "false"
 import cv2
 import einops
 import numpy as np
