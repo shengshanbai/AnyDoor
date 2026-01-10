@@ -5,15 +5,20 @@ import torch.nn.functional as F
 from torch import nn, einsum
 from einops import rearrange, repeat
 from typing import Optional, Any
+import os
 
 from ldm.modules.diffusionmodules.util import checkpoint
 
 
+XFORMERS_ENABLED = os.environ.get("XFORMERS_DISABLED") is None
 try:
-    import xformers
-    import xformers.ops
-    XFORMERS_IS_AVAILBLE = True
-except:
+    if XFORMERS_ENABLED:
+        import xformers
+        import xformers.ops
+        XFORMERS_IS_AVAILBLE = True
+    else:
+        raise ImportError
+except ImportError:
     XFORMERS_IS_AVAILBLE = False
 
 # CrossAttn precision handling
