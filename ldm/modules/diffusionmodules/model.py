@@ -7,14 +7,18 @@ from einops import rearrange
 from typing import Optional, Any
 
 from ldm.modules.attention import MemoryEfficientCrossAttention
+import os
 
+XFORMERS_ENABLED = os.environ.get("XFORMERS_DISABLED") is None
 try:
-    import xformers
-    import xformers.ops
-    XFORMERS_IS_AVAILBLE = True
-except:
+    if XFORMERS_ENABLED:
+        import xformers
+        import xformers.ops
+        XFORMERS_IS_AVAILBLE = True
+    else:
+        raise ImportError
+except ImportError:
     XFORMERS_IS_AVAILBLE = False
-    print("No module 'xformers'. Proceeding without it.")
 
 
 def get_timestep_embedding(timesteps, embedding_dim):
