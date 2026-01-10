@@ -1,8 +1,7 @@
 # Copyright (c) Meta Platforms, Inc. and affiliates.
-# All rights reserved.
 #
-# This source code is licensed under the license found in the
-# LICENSE file in the root directory of this source tree.
+# This source code is licensed under the Apache License, Version 2.0
+# found in the LICENSE file in the root directory of this source tree.
 
 from pathlib import Path
 import re
@@ -51,6 +50,7 @@ def get_package_version() -> str:
 requirements, extra_indices = get_requirements()
 version = get_package_version()
 dev_requirements, _ = get_requirements(HERE / "requirements-dev.txt")
+extras_requirements, _ = get_requirements(HERE / "requirements-extras.txt")
 
 
 setup(
@@ -67,19 +67,20 @@ setup(
         "": ["*.yaml"],
     },
     install_requires=requirements,
-    dependency_links=extra_indices,
     extras_require={
         "dev": dev_requirements,
+        "extras": extras_requirements,
     },
+    dependency_links=extra_indices,
     install_package_data=True,
-    license="CC-BY-NC",
+    license="Apache",
     license_files=("LICENSE",),
     classifiers=[
         # Trove classifiers: https://github.com/pypa/trove-classifiers/blob/main/src/trove_classifiers/__init__.py
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
         "Intended Audience :: Science/Research",
-        "License :: Other/Proprietary License",
+        "License :: OSI Approved :: Apache Software License",
         "Programming Language :: Python :: 3.9",
         "Topic :: Scientific/Engineering :: Artificial Intelligence",
         "Topic :: Software Development :: Libraries :: Python Modules",

@@ -1,3 +1,6 @@
+import os
+#设置环境变量
+os.environ["XFORMERS_ENABLED"] = "false"
 import cv2
 import einops
 import numpy as np
@@ -13,7 +16,6 @@ cv2.ocl.setUseOpenCL(False)
 import albumentations as A
 from omegaconf import OmegaConf
 from PIL import Image
-
 
 save_memory = False
 disable_verbosity()

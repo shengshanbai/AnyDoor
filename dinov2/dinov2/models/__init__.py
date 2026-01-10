@@ -1,8 +1,7 @@
 # Copyright (c) Meta Platforms, Inc. and affiliates.
-# All rights reserved.
 #
-# This source code is licensed under the license found in the
-# LICENSE file in the root directory of this source tree.
+# This source code is licensed under the Apache License, Version 2.0
+# found in the LICENSE file in the root directory of this source tree.
 
 import logging
 
@@ -24,6 +23,11 @@ def build_model(args, only_teacher=False, img_size=224):
             qkv_bias=args.qkv_bias,
             proj_bias=args.proj_bias,
             ffn_bias=args.ffn_bias,
+            num_register_tokens=args.num_register_tokens,
+            interpolate_offset=args.interpolate_offset,
+            interpolate_antialias=args.interpolate_antialias,
+            in_chans=args.in_chans,
+            channel_adaptive=args.channel_adaptive,
         )
         teacher = vits.__dict__[args.arch](**vit_kwargs)
         if only_teacher:

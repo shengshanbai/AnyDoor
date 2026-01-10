@@ -1,8 +1,7 @@
 # Copyright (c) Meta Platforms, Inc. and affiliates.
-# All rights reserved.
 #
-# This source code is licensed under the license found in the
-# LICENSE file in the root directory of this source tree.
+# This source code is licensed under the Apache License, Version 2.0
+# found in the LICENSE file in the root directory of this source tree.
 
 import logging
 import os
@@ -57,7 +56,7 @@ def get_sha():
         sha = _run(["git", "rev-parse", "HEAD"])
         subprocess.check_output(["git", "diff"], cwd=cwd)
         diff = _run(["git", "diff-index", "HEAD"])
-        diff = "has uncommited changes" if diff else "clean"
+        diff = "has uncommitted changes" if diff else "clean"
         branch = _run(["git", "rev-parse", "--abbrev-ref", "HEAD"])
     except Exception:
         pass

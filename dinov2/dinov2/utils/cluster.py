@@ -1,8 +1,7 @@
 # Copyright (c) Meta Platforms, Inc. and affiliates.
-# All rights reserved.
 #
-# This source code is licensed under the license found in the
-# LICENSE file in the root directory of this source tree.
+# This source code is licensed under the Apache License, Version 2.0
+# found in the LICENSE file in the root directory of this source tree.
 
 from enum import Enum
 import os
@@ -65,8 +64,8 @@ def get_slurm_partition(cluster_type: Optional[ClusterType] = None) -> Optional[
         return None
 
     SLURM_PARTITIONS = {
-        ClusterType.AWS: "learnlab",
-        ClusterType.FAIR: "learnlab",
+        ClusterType.AWS: "learnaccel",
+        ClusterType.FAIR: "learnaccel",
         ClusterType.RSC: "learn",
     }
     return SLURM_PARTITIONS[cluster_type]

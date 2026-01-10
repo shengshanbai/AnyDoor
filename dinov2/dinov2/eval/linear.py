@@ -1,8 +1,7 @@
 # Copyright (c) Meta Platforms, Inc. and affiliates.
-# All rights reserved.
 #
-# This source code is licensed under the license found in the
-# LICENSE file in the root directory of this source tree.
+# This source code is licensed under the Apache License, Version 2.0
+# found in the LICENSE file in the root directory of this source tree.
 
 import argparse
 from functools import partial
@@ -33,9 +32,10 @@ logger = logging.getLogger("dinov2")
 
 def get_args_parser(
     description: Optional[str] = None,
-    parents: Optional[List[argparse.ArgumentParser]] = [],
+    parents: Optional[List[argparse.ArgumentParser]] = None,
     add_help: bool = True,
 ):
+    parents = parents or []
     setup_args_parser = get_setup_args_parser(parents=parents, add_help=False)
     parents = [setup_args_parser]
     parser = argparse.ArgumentParser(

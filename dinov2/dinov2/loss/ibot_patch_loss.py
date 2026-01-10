@@ -1,8 +1,7 @@
 # Copyright (c) Meta Platforms, Inc. and affiliates.
-# All rights reserved.
 #
-# This source code is licensed under the license found in the
-# LICENSE file in the root directory of this source tree.
+# This source code is licensed under the Apache License, Version 2.0
+# found in the LICENSE file in the root directory of this source tree.
 
 import torch
 import torch.distributed as dist
@@ -87,7 +86,7 @@ class iBOTPatchLoss(nn.Module):
             Q /= torch.sum(Q, dim=0, keepdim=True)
             Q /= B
 
-        Q *= B  # the colomns must sum to 1 so that Q is an assignment
+        Q *= B  # the columns must sum to 1 so that Q is an assignment
         return Q.t()
 
     def forward(self, student_patch_tokens, teacher_patch_tokens, student_masks_flat):

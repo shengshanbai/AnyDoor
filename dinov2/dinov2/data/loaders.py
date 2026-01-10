@@ -1,8 +1,7 @@
 # Copyright (c) Meta Platforms, Inc. and affiliates.
-# All rights reserved.
 #
-# This source code is licensed under the license found in the
-# LICENSE file in the root directory of this source tree.
+# This source code is licensed under the Apache License, Version 2.0
+# found in the LICENSE file in the root directory of this source tree.
 
 import logging
 from enum import Enum
@@ -11,7 +10,7 @@ from typing import Any, Callable, List, Optional, TypeVar
 import torch
 from torch.utils.data import Sampler
 
-from .datasets import ImageNet, ImageNet22k
+from .datasets import ImageNet, ImageNet22k, HPAone, HPAFoV, CHAMMI_CP, CHAMMI_HPA, CHAMMI_WTC
 from .samplers import EpochSampler, InfiniteSampler, ShardedInfiniteSampler
 
 
@@ -50,7 +49,7 @@ def _parse_dataset_str(dataset_str: str):
 
     for token in tokens[1:]:
         key, value = token.split("=")
-        assert key in ("root", "extra", "split")
+        assert key in ("root", "extra", "split", "mode", "wildcard")
         kwargs[key] = value
 
     if name == "ImageNet":
@@ -59,6 +58,16 @@ def _parse_dataset_str(dataset_str: str):
             kwargs["split"] = ImageNet.Split[kwargs["split"]]
     elif name == "ImageNet22k":
         class_ = ImageNet22k
+    elif name == "HPAone":
+        class_ = HPAone
+    elif name == "HPAFoV":
+        class_ = HPAFoV
+    elif name == "CHAMMI_CP":
+        class_ = CHAMMI_CP
+    elif name == "CHAMMI_WTC":
+        class_ = CHAMMI_WTC
+    elif name == "CHAMMI_HPA":
+        class_ = CHAMMI_HPA
     else:
         raise ValueError(f'Unsupported dataset "{name}"')
 

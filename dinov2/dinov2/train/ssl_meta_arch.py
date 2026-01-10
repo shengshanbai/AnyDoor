@@ -1,8 +1,7 @@
 # Copyright (c) Meta Platforms, Inc. and affiliates.
-# All rights reserved.
 #
-# This source code is licensed under the license found in the
-# LICENSE file in the root directory of this source tree.
+# This source code is licensed under the Apache License, Version 2.0
+# found in the LICENSE file in the root directory of this source tree.
 
 from functools import partial
 import logging
@@ -19,13 +18,11 @@ from dinov2.fsdp import get_fsdp_wrapper, ShardedGradScaler, get_fsdp_modules, r
 
 from dinov2.models.vision_transformer import BlockChunk
 
+
 try:
     from xformers.ops import fmha
-
-    XFORMERS_AVAILABLE = True
 except ImportError:
-    XFORMERS_AVAILABLE = False
-assert XFORMERS_AVAILABLE, "xFormers is required for DINOv2 training"
+    raise AssertionError("xFormers is required for training")
 
 
 logger = logging.getLogger("dinov2")

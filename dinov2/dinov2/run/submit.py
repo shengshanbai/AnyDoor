@@ -1,8 +1,7 @@
 # Copyright (c) Meta Platforms, Inc. and affiliates.
-# All rights reserved.
 #
-# This source code is licensed under the license found in the
-# LICENSE file in the root directory of this source tree.
+# This source code is licensed under the Apache License, Version 2.0
+# found in the LICENSE file in the root directory of this source tree.
 
 import argparse
 import logging
@@ -24,9 +23,10 @@ logger = logging.getLogger("dinov2")
 
 def get_args_parser(
     description: Optional[str] = None,
-    parents: Optional[List[argparse.ArgumentParser]] = [],
+    parents: Optional[List[argparse.ArgumentParser]] = None,
     add_help: bool = True,
 ) -> argparse.ArgumentParser:
+    parents = parents or []
     slurm_partition = get_slurm_partition()
     parser = argparse.ArgumentParser(
         description=description,
@@ -44,7 +44,7 @@ def get_args_parser(
     parser.add_argument(
         "--nodes",
         "--nnodes",
-        default=2,
+        default=1,
         type=int,
         help="Number of nodes to request",
     )
