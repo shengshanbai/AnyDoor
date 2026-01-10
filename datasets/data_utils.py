@@ -32,6 +32,7 @@ def sobel(img, mask, thresh = 50):
     
     scharr[scharr < thresh] = 0.0
     scharr = np.stack([scharr,scharr,scharr],-1)
+    #保留原图色彩的边缘
     scharr = (scharr.astype(np.float32)/255 * img.astype(np.float32) ).astype(np.uint8)
     scharr = cv2.resize(scharr,(W,H))
     return scharr
