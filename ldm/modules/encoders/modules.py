@@ -282,7 +282,7 @@ class FrozenDinoV2Encoder(AbstractEncoder):
     """
     def __init__(self, device="cuda", freeze=True):
         super().__init__()
-        dinov2 = hubconf.dinov2_vitg14() 
+        dinov2 = hubconf.dinov2_vitg14(pretrained=False) 
         state_dict = torch.load(DINOv2_weight_path)
         dinov2.load_state_dict(state_dict, strict=False)
         self.model = dinov2.to(device)
