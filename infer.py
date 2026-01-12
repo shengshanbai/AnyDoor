@@ -8,10 +8,14 @@ def crop_content(image,mask,ratio=1.2):
     box=get_bbox_from_mask(mask)
     box=expand_bbox(mask,box,ratio=ratio)
     box=box2squre(image,box)
-    print("done")
+    image_crop=image[box[0]:box[1],box[2]:box[3],:]
+    mask_crop=mask[box[0]:box[1],box[2]:box[3]]
+    return image_crop,mask_crop
 
 def inference_single_image(normal_img,normal_mask,reference_img,reference_mask):
     reference_crop,reference_mask_crop=crop_content(reference_img,reference_mask)
+    cv2.imwrite("./output/temp.jpg",reference_crop)
+    print("done")
 
 
 @click.command() 
