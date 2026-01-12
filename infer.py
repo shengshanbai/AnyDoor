@@ -2,19 +2,21 @@ import click
 import orjson
 from pathlib import Path
 import cv2
-from datasets.data_utils import get_bbox_from_mask,expand_bbox,box2squre
+from datasets.data_utils import get_bbox_from_mask,expand_bbox,box2squre,sobel
 
 def crop_content(image,mask,ratio=1.2):
     box=get_bbox_from_mask(mask)
-    box=expand_bbox(mask,box,ratio=ratio)
     box=box2squre(image,box)
     image_crop=image[box[0]:box[1],box[2]:box[3],:]
     mask_crop=mask[box[0]:box[1],box[2]:box[3]]
-    return image_crop,mask_crop
+    return image_crop,mask_crop,box
 
 def inference_single_image(normal_img,normal_mask,reference_img,reference_mask):
-    reference_crop,reference_mask_crop=crop_content(reference_img,reference_mask)
-    cv2.imwrite("./output/temp.jpg",reference_crop)
+    reference_crop,reference_mask_crop,crop_box=crop_content(reference_img,reference_mask)
+    reference_crop=cv2.resize(reference_crop,(224,224))
+    reference_mask_crop=cv2.resize(reference_mask_crop,(224,224))
+    reference_collage=sobel(reference_crop,reference_mask_crop/255,thresh=25)
+    cv2.imwrite("./output/temp.jpg",reference_collage)
     print("done")
 
 
