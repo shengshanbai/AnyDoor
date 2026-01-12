@@ -15,7 +15,7 @@ def inference_single_image(normal_img,normal_mask,reference_img,reference_mask):
     reference_crop,reference_mask_crop,crop_box=crop_content(reference_img,reference_mask)
     reference_crop=cv2.resize(reference_crop,(224,224))
     reference_mask_crop=cv2.resize(reference_mask_crop,(224,224))
-    reference_collage=sobel(reference_crop,reference_mask_crop/255,thresh=25)
+    reference_collage=sobel(reference_crop,reference_mask_crop/255,thresh=10)
     cv2.imwrite("./output/temp.jpg",reference_collage)
     print("done")
 
