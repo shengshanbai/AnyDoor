@@ -6,7 +6,7 @@ from datasets.data_utils import get_bbox_from_mask,expand_bbox,box2squre
 
 def crop_content(image,mask,ratio=1.2):
     box=get_bbox_from_mask(mask)
-    box=expand_bbox(mask,box,ratio=[ratio,ratio])
+    box=expand_bbox(mask,box,ratio=ratio)
     box=box2squre(image,box)
     print("done")
 
